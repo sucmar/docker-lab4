@@ -10,5 +10,13 @@ services:
   frontend: 
     build: ./task3-module-vi
     ports:
-      - "5000:8080"
-    
+      - "3000:8080"
+    depends_on:
+      - api
+
+  api:
+    image: node:14-alpine
+    working_dir: /app
+    volumes:
+      - ./task3-module-vi/src/db:/app/src/db
+    command: sh -c "npm install -g json-server && json-server --watch ./src/db/db.json --port 3000"    
